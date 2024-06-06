@@ -23,10 +23,10 @@ const Navbar = () => {
       <div className="flex-1 flex justify-end items-center">
         <FontAwesomeIcon
           icon={faBell}
-          className="text-gray-800 mr-4 cursor-pointer"
+          className="text-gray-800 mr-4 text-2xl cursor-pointer"
         />
         <img
-          src="/avatar.jpg"
+          src="/avatar.png"
           alt="Profile"
           className="w-10 h-10 rounded-full"
         />
