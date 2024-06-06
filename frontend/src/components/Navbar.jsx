@@ -6,7 +6,7 @@ import { faSearch, faBell } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 w-full bg-white text-gray-800 shadow-md flex items-center p-4 z-50">
+    <nav className="fixed top-0 w-full bg-white lg:px-36 text-gray-800 shadow-md flex items-center p-2 z-50">
       <div className="flex-1">
         <Link to="/" className="text-2xl sm:px-10 font-bold text-gray-800">
           Zenith
