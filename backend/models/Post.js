@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-const Answer = require("./Answer");
 
 // Define the schema for the posts document
 const postSchema = new mongoose.Schema(
   {
     topic: {
       type: String,
-      // required: true,
+      required: true,
     },
     message: {
       type: String,
-      // required: true,
+      required: true,
     },
     score: {
       type: Number,
@@ -19,7 +18,7 @@ const postSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      // required: true,
+      required: true,
     },
     answers: [
       {

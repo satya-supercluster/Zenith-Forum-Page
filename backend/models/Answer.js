@@ -15,6 +15,11 @@ const answerSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    required: true,
+  },
 });
 
 // Create and export the model

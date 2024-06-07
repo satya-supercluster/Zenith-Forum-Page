@@ -1,6 +1,7 @@
 // prefix -> /api/post
 const Post = require("../models/Post");
-const Answer = require("../models/Post");
+const User = require("../models/User");
+const Answer = require("../models/Answer");
 const router = require("express").Router();
 // Controllers
 const createPost = require("../controllers/createPost");
@@ -20,28 +21,35 @@ router.post("/answer", async (req, res) => {
         .json({ error: "Answer, postId and userId are required" });
     }
 
-    // Find the post by ID
-    const post = await Post.findById(postId);
+    const [post, user] = await Promise.all([
+      Post.findById(postId),
+      User.findById(userId),
+    ]);
 
-    // Check if the post exists
+    // Check if the post and user exist
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     // Create the new answer
     const newAnswer = new Answer({
       user: userId,
-      answer:answer
+      answer: answer,
+      post:postId
     });
     // Add the answer to the post
-    await newAnswer.save();
+    const savedAnswer=await newAnswer.save();
 
-    post.answers.push(newAnswer._id);
+    post.answers.push(savedAnswer._id);
 
     // Save the updated post
     const updatedPost = await post.save();
 
     // Return the updated post
-    res.status(201).json(updatedPost);
+    res.status(201).json({updatedPost,savedAnswer});
   } catch (error) {
     console.error("Error adding answer:", error);
     res.status(500).json({ error: "Internal server error" });
