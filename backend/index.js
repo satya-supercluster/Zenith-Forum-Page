@@ -2,7 +2,9 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const dotenv = require("dotenv");
-// const route = require("./routes/routes");
+const postRoutes = require("./routes/postRoutes");
+const authRoutes = require("./routes/authRoutes");
+// const getRoutes = require("./routes/getRoutes");
 dotenv.config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -23,7 +25,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Routers
-// app.use("/api/users", route);
+app.use("/api/post", postRoutes);
+app.use("/api/auth", authRoutes);
+// app.use("/api/get", getRoutes);
 
 //Mongoose Connection
 mongoose
@@ -32,8 +36,8 @@ mongoose
     console.log("MONGOOSE CONNECTED");
   })
   .catch((e) => {
-      console.log(`Not Connencted to MONGOOSE: ${e}`);
-      console.log(`${process.env.MONGO_URL}`);
+    console.log(`Not Connencted to MONGOOSE: ${e}`);
+    console.log(`${process.env.MONGO_URL}`);
   });
 
 // Listening the server

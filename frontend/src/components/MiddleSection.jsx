@@ -40,12 +40,12 @@ const MiddleSection = () => {
         <div className="flex justify-end mt-4">
           <button
             className={`px-4 py-2 rounded-md text-white shadow-md font-semibold ${
-              topic.trim()
+              (topic.trim() && message.trim())
                 ? "bg-blue-500 hover:bg-blue-600"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
             onClick={handlePostMessage}
-            disabled={!topic.trim()}
+            disabled={!topic.trim() || !message.trim()}
           >
             Post
           </button>
