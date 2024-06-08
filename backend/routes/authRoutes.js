@@ -2,36 +2,20 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const admin = require("../config/firebase-config");
 
-// Middleware to verify Firebase token
-const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized: No token provided" });
-  }
-
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    console.error("Error verifying token:", error);
-    res.status(403).json({ error: "Forbidden: Invalid token" });
-  }
-};
+const verifyToken = require("../middleware/verifyToken");
 
 // API to handle Google Sign-In (Protected by verifyToken middleware)
 router.post("/google", verifyToken, async (req, res) => {
   try {
-    const { uid, name, email, picture } = req.user;
+    const { user_id, name, email, picture } = req.user;
 
     // Find or create user
-    let user = await User.findOne({ googleId: uid });
+    let user = await User.findOne({ googleId: user_id });
 
     if (!user) {
       user = new User({
-        googleId: uid,
+        googleId: user_id,
         name: name || "Anonymous",
         email: email || "noemail@example.com",
         avatar: picture || '/avatar.png',

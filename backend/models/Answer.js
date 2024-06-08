@@ -11,10 +11,12 @@ const answerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  score: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",

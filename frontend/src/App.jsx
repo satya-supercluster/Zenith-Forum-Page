@@ -1,11 +1,11 @@
 // src/App.js
-import React, {useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "./config/firebase.config.js";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import Login from "./components/Login"
+import Login from "./components/Login";
 function App() {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
@@ -77,6 +77,7 @@ function App() {
   };
 
   useEffect(() => {
+    clearLocalStorage();
     const checkAuth = async () => {
       const authStatus = checkAuthStatus();
       setAuth(authStatus);
@@ -90,7 +91,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={(!auth) ? <Login signIn={userLoginWithGoogle} />:<Home />} />
+          <Route
+            index
+            element={!auth ? <Login signIn={userLoginWithGoogle} /> : <Home />}
+          />
           {/* <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} /> */}
         </Route>
