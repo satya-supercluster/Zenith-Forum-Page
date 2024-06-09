@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full bg-white lg:px-36 text-gray-800 shadow-md flex items-center p-2 z-50">
       <div className="flex-1">
-        <Link to="/" className="text-2xl sm:px-10 font-bold text-gray-800">
+        <Link to="/" className="text-2xl sm:px-10 px-5 font-bold text-gray-800">
           Zenith
         </Link>
       </div>

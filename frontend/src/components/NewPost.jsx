@@ -43,7 +43,7 @@ const NewPost = () => {
   };
   return (
     <div>
-      <div className="bg-white rounded-lg shadow-md shadow-slate-500 p-4">
+      <div className="bg-white rounded-lg shadow-md shadow-slate-500 p-4 my-5">
         <div className="pb-2 text-lg text-blue-500 font-semibold">
           Create Post
         </div>

@@ -5,11 +5,12 @@ import {
   faThumbsUp,
   faThumbsDown,
   faComment,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 const PostCard = ({ sender, message, topic }) => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
-
+  const [answer, setAnswer] = useState("");
   const toggleComments = () => {
     setIsCommentsOpen(!isCommentsOpen);
   };
@@ -48,9 +49,18 @@ const PostCard = ({ sender, message, topic }) => {
       </div>
       {isCommentsOpen && (
         <div className="px-6 py-4 bg-gray-100">
-          <div className="text-gray-700 text-sm">
-            {/* Comments would be dynamically loaded here */}
-            This is where the comment thread will be displayed.
+          <div className="text-gray-700 text-sm flex flex-col gap-3 justify-center items-center">
+            <textarea
+              className="w-full h-12 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden resize-none"
+              placeholder="Answer it..."
+              value={answer}
+              onChange={(e) => {
+                setAnswer(e.target.value);
+              }}
+            />
+            <button className=" bg-blue-500 w-[40%] p-1 text-xl max-md:text-md text-white rounded-full">
+              <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
           </div>
         </div>
       )}

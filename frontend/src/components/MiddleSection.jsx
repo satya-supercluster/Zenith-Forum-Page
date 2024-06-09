@@ -61,6 +61,7 @@ const MiddleSection = () => {
         <div className="w-full flex flex-col gap-5 justify-center">
           {posts?.map((post) => (
             <PostCard
+              key={post._id}
               sender={post.user.name}
               message={post.message}
               topic={post.topic}
@@ -68,8 +69,7 @@ const MiddleSection = () => {
           ))}
         </div>
       )}
-      <div className="h-16">
-      </div>
+      <div className="h-16"></div>
     </div>
   );
 };
