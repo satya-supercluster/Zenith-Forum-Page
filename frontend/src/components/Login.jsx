@@ -1,13 +1,13 @@
 import React from "react";
-
-const Login = ({signIn}) => {
-
+import { useAuth } from "../contexts/AuthContext";
+const Login = () => {
+  const { userLoginWithGoogle } = useAuth();
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl mb-4 text-center font-bold">Sign In</h1>
         <button
-          onClick={signIn}
+          onClick={userLoginWithGoogle}
           className="flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
         >
           <svg className="w-5 h-5 mr-2" viewBox="0 0 48 48">

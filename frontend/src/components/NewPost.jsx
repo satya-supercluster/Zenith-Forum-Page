@@ -2,33 +2,33 @@ import React, { useState } from "react";
 const NewPost = () => {
   const [message, setMessage] = useState("");
   const [topic, setTopic] = useState("");
-//   const createPost = async (userId, message, topic, token) => {
-//     try {
-//       const response = await fetch("http://localhost:8080/api/post/post", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: JSON.stringify({
-//           userId,
-//           message,
-//           topic,
-//         }),
-//       });
+  const createPost = async (userId, message, topic, token) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/post/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId,
+          message,
+          topic,
+        }),
+      });
 
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! status: ${response.status}`);
-//       }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-//       const data = await response.json();
-//       console.log("Post created successfully:", data);
-//       return data;
-//     } catch (error) {
-//       console.error("Failed to create post:", error);
-//       throw error;
-//     }
-//   };
+      const data = await response.json();
+      console.log("Post created successfully:", data);
+      return data;
+    } catch (error) {
+      console.error("Failed to create post:", error);
+      throw error;
+    }
+  };
   const handlePostMessage = () => {
     // Here, you would handle the logic for posting the message and topic
 

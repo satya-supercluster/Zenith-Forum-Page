@@ -1,7 +1,9 @@
 import React,{useState} from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-const RightSection = ({setNewPostSection,newPostSection}) => {
+import { useAuth } from '../contexts/AuthContext';
+const RightSection = ({ setNewPostSection, newPostSection }) => {
+  const { logout } = useAuth();
   return (
     <div className="flex flex-col w-full items-center">
       <button
@@ -17,11 +19,17 @@ const RightSection = ({setNewPostSection,newPostSection}) => {
         ) : (
           <div className="flex items-center justify-center">
             <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            <div>Start New Topic</div>
+            <div>New Topic</div>
           </div>
         )}
       </button>
-      <div></div>
+      <div>
+        <button
+          onClick={logout}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
