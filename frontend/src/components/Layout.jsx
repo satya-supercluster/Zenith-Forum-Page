@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useAuth } from "../contexts/AuthContext";
+import BottomBar from "./BottomBar";
 const Layout = () => {
   const { user } = useAuth();
   return (
@@ -10,6 +11,7 @@ const Layout = () => {
       <div>
         <Outlet />
       </div>
+      <BottomBar/>
     </div>
   );
 };

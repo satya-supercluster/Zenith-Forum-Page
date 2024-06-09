@@ -14,7 +14,7 @@ const Navbar = () => {
           Zenith
         </Link>
       </div>
-      <div className="flex-1 max-[350px]:hidden flex bg-slate-300 items-center justify-center relative rounded-lg border border-gray-300 overflow-hidden">
+      <div className="flex-1 max-[500px]:hidden flex bg-slate-300 items-center justify-center relative rounded-lg border border-gray-300 overflow-hidden">
         <FontAwesomeIcon icon={faSearch} className=" pl-2 text-gray-500" />
         <input
           type="search"

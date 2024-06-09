@@ -4,18 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import { AuthProvider,useAuth } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { DataProvider} from "./contexts/DataContext";
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<AuthenticatedRoute />} />
-            {/* Other routes */}
-          </Route>
-        </Routes>
-      </Router>
+      <DataProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<AuthenticatedRoute />} />
+              {/* Other routes */}
+            </Route>
+          </Routes>
+        </Router>
+      </DataProvider>
     </AuthProvider>
   );
 }

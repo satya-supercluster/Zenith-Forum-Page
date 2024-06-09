@@ -30,18 +30,17 @@ export const AuthProvider = ({ children }) => {
         });
         // console.log(await res.text());
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
           setAuth(false);
           setToken(null);
           setUser(null);
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
 
         const data = await res.json();
-        console.log(data);
         setAuth(true);
         setToken(createdToken);
         setUser(data.user);
-      } else {
+        } else {
         setAuth(false);
         setToken(null);
         setUser(null);

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 const NewPost = () => {
   const [message, setMessage] = useState("");
   const [topic, setTopic] = useState("");
-  const createPost = async (userId, message, topic, token) => {
+  const { token, user, logout } = useAuth();
+  const createPost = async (userId, message, topic, recievedToken) => {
     try {
       const response = await fetch("http://localhost:8080/api/post/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${recievedToken}`,
         },
         body: JSON.stringify({
           userId,
@@ -18,6 +20,7 @@ const NewPost = () => {
       });
 
       if (!response.ok) {
+        if (response.status === 401) logout();
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -29,11 +32,9 @@ const NewPost = () => {
       throw error;
     }
   };
-  const handlePostMessage = () => {
+  const handlePostMessage = async () => {
     // Here, you would handle the logic for posting the message and topic
-
-    console.log("Posting message:", message);
-    console.log("Posting topic:", topic);
+    await createPost(user.id, message, topic, token);
     setMessage("");
     setTopic("");
   };

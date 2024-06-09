@@ -1,11 +1,13 @@
 import React,{useState} from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from '../contexts/AuthContext';
-const RightSection = ({ setNewPostSection, newPostSection }) => {
+import { useData } from '../contexts/DataContext';
+const RightSection = () => {
+  const { setNewPostSection, newPostSection } = useData();
   const { logout } = useAuth();
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col gap-5 w-full items-center">
       <button
         onClick={() => setNewPostSection(!newPostSection)}
         className={`flex items-center shadow-lg shadow-blue-300 text-center justify-center w-full ${
@@ -15,18 +17,20 @@ const RightSection = ({ setNewPostSection, newPostSection }) => {
         } text-white font-bold py-2 lg:px-4 px-2 rounded-lg transition duration-300 max-lg:text-sm`}
       >
         {newPostSection ? (
-          <div>Discard Topic</div>
+          <div>Discard Post</div>
         ) : (
           <div className="flex items-center justify-center">
             <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            <div>New Topic</div>
+            <div>New Post</div>
           </div>
         )}
       </button>
-      <div>
+      <div className="flex items-center justify-center w-full">
         <button
+          className="flex items-center shadow-lg shadow-blue-300 text-center justify-center w-full text-white font-bold py-2 lg:px-4 px-2 rounded-lg transition duration-300 max-lg:text-sm bg-red-500"
           onClick={logout}
         >
+          <FontAwesomeIcon className="mr-2" icon={faRightFromBracket} />
           Logout
         </button>
       </div>
