@@ -87,10 +87,28 @@ function App() {
     checkAuth();
   }, []);
 
+
+
+  const [user, setUser] = useState(null);
+  const getUserFromLocalStorage = () => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      return JSON.parse(userString);
+    }
+    return null;
+  };
+  useEffect(() => {
+    const storedUser = getUserFromLocalStorage();
+    if (storedUser) {
+      setUser(storedUser);
+      console.log(user);
+    }
+  }, [auth]);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout user={user} />}>
           <Route
             index
             element={!auth ? <Login signIn={userLoginWithGoogle} /> : <Home />}

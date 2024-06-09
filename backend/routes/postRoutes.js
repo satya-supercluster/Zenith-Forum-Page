@@ -11,12 +11,13 @@ const postUpvote = require("../controllers/postUpvote");
 const postDownvote = require("../controllers/postDownvote");
 const answerDownvote = require("../controllers/answerDownvote");
 const answerUpvote = require("../controllers/answerUpvote");
+const verifyToken = require("../middleware/verifyToken");
 
 // POST - Create a new post
-router.post("/post", createPost);
+router.post("/post",verifyToken, createPost);
 
 // ANSWER - Create an answer
-router.post("/answer", createAnswer);
+router.post("/answer",verifyToken, createAnswer);
 
 
 router.post("/post/inc", postUpvote);
