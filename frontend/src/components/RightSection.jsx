@@ -7,7 +7,7 @@ const RightSection = () => {
   const { setNewPostSection, newPostSection } = useData();
   const { logout } = useAuth();
   return (
-    <div className="flex flex-col gap-5 w-full items-center">
+    <div className="pt-10 flex flex-col gap-5 w-full items-center">
       <button
         onClick={() => setNewPostSection(!newPostSection)}
         className={`flex items-center shadow-lg shadow-blue-300 text-center justify-center w-full ${

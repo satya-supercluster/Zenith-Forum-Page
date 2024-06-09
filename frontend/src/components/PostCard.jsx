@@ -7,7 +7,7 @@ import {
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PostCard = ({ sender, message }) => {
+const PostCard = ({ sender, message, topic }) => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
   const toggleComments = () => {
@@ -15,10 +15,19 @@ const PostCard = ({ sender, message }) => {
   };
 
   return (
-    <div className="max-sm:w-full w-3/4 h-fit bg-white shadow-md rounded-lg overflow-hidden">
+    <div className="w-full h-fit bg-white shadow-md rounded-lg overflow-hidden">
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{sender}</div>
-        <p className="text-gray-700 text-base">{message}</p>
+        <div className="font-bold text-[0.7rem] mb-1">
+          <div>Posted by: {sender}</div>
+        </div>
+        <div className="p-2 bg-slate-300 rounded-lg">
+          <div className="font-bold text-[1rem] mb-2">
+            <div>Topic: {topic}</div>
+          </div>
+          <p className="text-gray-700 text-base break-words overflow-hidden">
+            {message}
+          </p>
+        </div>
       </div>
       <div className="px-6 py-4 flex justify-between items-center">
         <div className="flex space-x-4">

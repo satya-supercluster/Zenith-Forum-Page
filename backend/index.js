@@ -4,7 +4,7 @@ const { default: mongoose } = require("mongoose");
 const dotenv = require("dotenv");
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
-// const getRoutes = require("./routes/getRoutes");
+const getRoutes = require("./routes/getRoutes");
 dotenv.config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Routers
 app.use("/api/post", postRoutes);
 app.use("/api/auth", authRoutes);
-// app.use("/api/get", getRoutes);
+app.use("/api/get", getRoutes);
 
 //Mongoose Connection
 mongoose

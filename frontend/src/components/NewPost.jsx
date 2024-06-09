@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useData } from "../contexts/DataContext";
 const NewPost = () => {
   const [message, setMessage] = useState("");
   const [topic, setTopic] = useState("");
   const { token, user, logout } = useAuth();
+  const { refetch, setRefetch,newPostSection,setNewPostSection } = useData();
   const createPost = async (userId, message, topic, recievedToken) => {
     try {
       const response = await fetch("http://localhost:8080/api/post/post", {
@@ -23,10 +25,10 @@ const NewPost = () => {
         if (response.status === 401) logout();
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();
-      console.log("Post created successfully:", data);
-      return data;
+      setRefetch(!refetch);
+      // const data = await response.json();
+      // console.log("Post created successfully:", data);
+      // return data;
     } catch (error) {
       console.error("Failed to create post:", error);
       throw error;
@@ -34,6 +36,7 @@ const NewPost = () => {
   };
   const handlePostMessage = async () => {
     // Here, you would handle the logic for posting the message and topic
+    setNewPostSection(!newPostSection);
     await createPost(user.id, message, topic, token);
     setMessage("");
     setTopic("");
