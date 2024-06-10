@@ -65,7 +65,8 @@ const NewPost = () => {
           }}
           required
         />
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-between items-center mt-4">
+          <div className="text-yellow-700 text-[0.7rem]">*Both Fields Required</div>
           <button
             className={`px-4 py-2 rounded-md text-white shadow-md font-semibold ${
               topic.trim() && message.trim()
