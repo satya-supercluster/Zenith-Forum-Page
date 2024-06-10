@@ -5,10 +5,10 @@ const createPost = async (req, res) => {
     const { topic, message, userId } = req.body;
 
     // Validate required fields
-    if (!topic || !message || !userId) {
+    if (!topic || !userId) {
       return res
         .status(400)
-        .json({ error: "topic, message, and userId are required" });
+        .json({ error: "topic, and userId are required" });
     }
 
     const user = await User.findById(userId);
