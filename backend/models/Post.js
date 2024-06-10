@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema(
     },
     message: {
       type: String,
+      required:true
     },
     likes: [
       {
