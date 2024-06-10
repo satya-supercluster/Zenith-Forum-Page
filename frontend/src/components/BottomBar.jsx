@@ -22,8 +22,8 @@ const BottomBar = () => {
             }}
             className={`text-white flex justify-center items-center px-2 ${
               newPostSection
-                ? "bg-red-500 hover:bg-red-700"
-                : "bg-blue-500 hover:bg-blue-700"
+                ? "bg-red-500 hover:bg-red-700 shadow-sm shadow-red-300"
+                : "bg-blue-500 hover:bg-blue-700 shadow-sm shadow-blue-300"
             } h-10 rounded`}
           >
             {newPostSection ? (

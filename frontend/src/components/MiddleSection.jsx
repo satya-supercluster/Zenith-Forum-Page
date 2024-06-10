@@ -62,9 +62,7 @@ const MiddleSection = () => {
           {posts?.map((post) => (
             <PostCard
               key={post._id}
-              sender={post.user.name}
-              message={post.message}
-              topic={post.topic}
+              post={post}
             />
           ))}
         </div>

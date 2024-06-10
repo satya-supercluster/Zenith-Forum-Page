@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [signing, setSigning] = useState(false);
   const [token, setToken] = useState(null);
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
         // console.log(await res.text());
         if (!res.ok) {
           setAuth(false);
+          setSigning(false);
           setToken(null);
           setUser(null);
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -39,10 +41,12 @@ export const AuthProvider = ({ children }) => {
         const data = await res.json();
         setAuth(true);
         setToken(createdToken);
+        setSigning(false);
         setUser(data.user);
         } else {
         setAuth(false);
         setToken(null);
+        setSigning(false);
         setUser(null);
         console.log("No user from Google Sign-In");
       }
@@ -50,6 +54,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Failed to Authenticate:", error);
       setAuth(false);
       setToken(null);
+      setSigning(false);
       setUser(null);
     }
   };
@@ -108,7 +113,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ auth, user, isLoading, token, userLoginWithGoogle, logout }}
+      value={{ auth, user, isLoading, token, userLoginWithGoogle, logout, signing, setSigning }}
     >
       {children}
     </AuthContext.Provider>

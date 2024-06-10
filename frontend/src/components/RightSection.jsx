@@ -30,7 +30,7 @@ const RightSection = () => {
       </button>
       <div className="flex items-center justify-center w-full">
         <button
-          className="flex items-center shadow-lg shadow-blue-300 text-center justify-center w-full text-white font-bold py-2 lg:px-4 px-2 rounded-lg transition duration-300 max-lg:text-sm bg-red-500"
+          className="flex items-center shadow-lg shadow-red-300 text-center justify-center w-full text-white font-bold py-2 lg:px-4 px-2 rounded-lg transition duration-300 max-lg:text-sm bg-red-500"
           onClick={logout}
         >
           <FontAwesomeIcon className="mr-2" icon={faRightFromBracket} />
