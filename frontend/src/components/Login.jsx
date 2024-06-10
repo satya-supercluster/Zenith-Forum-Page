@@ -5,7 +5,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 const Login = () => {
   const { userLoginWithGoogle } = useAuth();
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-slate-300">
       <div className="bg-white m-5 p-8 rounded-lg shadow-md shadow-blue-300 leading-1 sm:w-1/2 lg:w-1/3">
         <h1 className="text-2xl max-sm:text-lg mb-1 text-left font-bold">
           Welcome
