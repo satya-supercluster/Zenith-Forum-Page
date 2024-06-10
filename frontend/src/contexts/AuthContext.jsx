@@ -1,7 +1,7 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { app } from "../config/firebase.config.js";
+import { app } from "../config/firebase-config.js";
 
 const AuthContext = createContext();
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       if (result.user) {
         const createdToken = await result.user.getIdToken();
         console.log(createdToken);
-        const res = await fetch("http://localhost:8080/api/auth/google", {
+        const res = await fetch(`${import.meta.env.VITE_SITE}/api/auth/google`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${createdToken}`,
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         // User is signed in.
         firebaseUser.getIdToken().then((newToken) => {
           setToken(newToken);
-          fetch("http://localhost:8080/api/auth/google", {
+          fetch(`${import.meta.env.VITE_SITE}/api/auth/google`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${newToken}`,

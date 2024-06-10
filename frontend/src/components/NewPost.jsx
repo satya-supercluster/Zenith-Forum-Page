@@ -8,7 +8,7 @@ const NewPost = () => {
   const { refetch, setRefetch,newPostSection,setNewPostSection } = useData();
   const createPost = async (userId, message, topic, recievedToken) => {
     try {
-      const response = await fetch("http://localhost:8080/api/post/post", {
+      const response = await fetch(`${import.meta.env.VITE_SITE}/api/post/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

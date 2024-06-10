@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 export const getPost = async (recievedToken, logout, setIsLoading) => {
   setIsLoading(true);
   try {
-    const response = await fetch("http://localhost:8080/api/get/posts", {
+    const response = await fetch(`${import.meta.env.VITE_SITE}/api/get/posts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
