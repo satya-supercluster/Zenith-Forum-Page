@@ -9,7 +9,10 @@ const RightSection = () => {
   return (
     <div className="pt-10 flex flex-col gap-5 w-full items-center">
       <button
-        onClick={() => setNewPostSection(!newPostSection)}
+        onClick={() => {
+          window.scrollTo(0, 0);
+          setNewPostSection(!newPostSection);
+        }}
         className={`flex items-center shadow-lg shadow-blue-300 text-center justify-center w-full ${
           newPostSection
             ? "bg-red-500 hover:bg-red-700"

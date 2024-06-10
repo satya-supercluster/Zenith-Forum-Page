@@ -2,10 +2,10 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const dotenv = require("dotenv");
+dotenv.config();
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
 const getRoutes = require("./routes/getRoutes");
-dotenv.config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -14,9 +14,8 @@ const app = express();
 
 // Checking the server
 app.get("/", (req, res) => {
-  res.send("<H1>Hey There, I'm Here</H1>");
+  res.send(process.env);
 });
-
 app.use(cors());
 
 // middlewares

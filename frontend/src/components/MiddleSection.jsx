@@ -56,7 +56,7 @@ const MiddleSection = () => {
         </h1>
       </div>
       {isLoading ? (
-        <div className="text-lg p-5 font-bold text-center">Loading...</div>
+        <div className="text-2xl text-gray-700 p-5 w-full h-full font-bold flex justify-center items-center">Loading Posts...</div>
       ) : (
         <div className="w-full flex flex-col gap-5 justify-center">
           {posts?.map((post) => (

@@ -72,7 +72,7 @@ const NewPost = () => {
                 : "bg-gray-400 cursor-not-allowed"
             }`}
             onClick={handlePostMessage}
-            disabled={!topic.trim() || !message.trim()}
+            disabled={!topic.trim() || !message.trim() || !newPostSection}
           >
             Post
           </button>

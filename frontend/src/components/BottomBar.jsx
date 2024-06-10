@@ -16,7 +16,10 @@ const BottomBar = () => {
         <FontAwesomeIcon icon={faSearch} className=" p-3 text-white text-lg" />
         <div>
           <button
-            onClick={() => setNewPostSection(!newPostSection)}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              setNewPostSection(!newPostSection);
+            }}
             className={`text-white flex justify-center items-center px-2 ${
               newPostSection
                 ? "bg-red-500 hover:bg-red-700"

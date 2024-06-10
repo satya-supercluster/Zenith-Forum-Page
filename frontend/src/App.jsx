@@ -28,7 +28,7 @@ const AuthenticatedRoute = () => {
   const { auth, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen flex justify-center items-center text-3xl font-bold text-gray-700">Authorizing...</div>;
   }
 
   return !auth ? <Login /> : <Home />;
