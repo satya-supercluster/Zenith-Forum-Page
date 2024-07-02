@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         setToken(createdToken);
         setSigning(false);
         setUser(data.user);
+        console.log(data.user);
         } else {
         setAuth(false);
         setToken(null);

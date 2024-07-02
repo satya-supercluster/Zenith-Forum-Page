@@ -28,7 +28,15 @@ const AuthenticatedRoute = () => {
   const { auth, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div className="min-h-screen flex justify-center items-center text-3xl bg-slate-300 font-bold text-gray-700">Authorizing...</div>;
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center text-3xl bg-slate-300 font-bold text-gray-700">
+        <div>Authorizing...</div>
+        <div className="text-sm font-semibold">
+          Free instance server will spin down with inactivity, which can delay
+          requests by 50 seconds or more.
+        </div>
+      </div>
+    );
   }
 
   return !auth ? <Login /> : <Home />;

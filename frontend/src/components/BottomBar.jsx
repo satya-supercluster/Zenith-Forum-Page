@@ -13,7 +13,10 @@ const BottomBar = () => {
   return auth ? (
     <div className="min-[500px]:hidden fixed bottom-0 bg-gray-700 rounded-t-3xl w-screen h-12 py-1 px-5">
       <div className="w-full h-full flex justify-center gap-5 items-center">
-        <FontAwesomeIcon icon={faSearch} className=" p-3 text-white text-lg" />
+        <div className="flex items-center text-white text-lg">
+          <FontAwesomeIcon icon={faSearch} className=" p-3" />
+          Search
+        </div>
         <div>
           <button
             onClick={() => {
@@ -36,11 +39,9 @@ const BottomBar = () => {
             )}
           </button>
         </div>
-        <button className="p-3" onClick={logout}>
-          <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="text-white text-lg"
-          />
+        <button className="p-3 text-white text-lg flex items-center" onClick={logout}>
+          <FontAwesomeIcon icon={faRightFromBracket} className="pr-2" />
+          Logout
         </button>
       </div>
     </div>

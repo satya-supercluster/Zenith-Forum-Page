@@ -17,12 +17,19 @@ const Login = () => {
           Sign In
         </h2>
         <button
-          onClick={() => { setSigning(true); userLoginWithGoogle(); }}
+          onClick={() => {
+            setSigning(true);
+            userLoginWithGoogle();
+          }}
           className="flex max-sm:text-sm flex-col items-center text-center justify-center w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors shadow-md"
         >
           <FontAwesomeIcon className="mr-2 text-white" icon={faGoogle} />
-          {signing?<div>Signing in...</div>:<div>Sign in with Google</div>}
+          {signing ? <div>Signing in...</div> : <div>Sign in with Google</div>}
         </button>
+        <div className="text-sm font-semibold">
+          Free instance server will spin down with inactivity, which can delay
+          requests by 50 seconds or more.
+        </div>
       </div>
     </div>
   );

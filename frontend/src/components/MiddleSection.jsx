@@ -28,16 +28,21 @@ export const getPost = async (recievedToken, logout, setIsLoading) => {
   }
 };
 const MiddleSection = () => {
-  const { newPostSection,refetch } = useData();
-  const { logout, token } = useAuth();
+  const { newPostSection,refetch,select } = useData();
+  const { logout, token,user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState(null);
-
+  const [userPosts, setUserPosts] = useState(null);
   useEffect(() => {
+    console.log(user);
     const fetchPosts = async () => {
       try {
         const fetchedPosts = await getPost(token, logout,setIsLoading);
         setPosts(fetchedPosts);
+        const currentUserPosts = fetchedPosts.filter(
+          (post) => post.user._id === user.id
+        );
+        setUserPosts(currentUserPosts);
       } catch (error) {
         // Error is already logged in getPost
       } finally {
@@ -46,7 +51,7 @@ const MiddleSection = () => {
     };
 
     fetchPosts();
-  }, [token, logout,refetch]);
+  }, [token, logout,refetch,user.id]);
   return (
     <div className="w-full mx-5 flex flex-col items-center">
       {newPostSection ? <NewPost /> : <div></div>}
@@ -56,14 +61,19 @@ const MiddleSection = () => {
         </h1>
       </div>
       {isLoading ? (
-        <div className="text-2xl text-gray-700 p-5 w-full h-full font-bold flex justify-center items-center">Loading Posts...</div>
+        <div className="text-2xl text-gray-700 p-5 w-full h-full font-bold flex justify-center items-center">
+          Loading Posts...
+        </div>
+      ) : select === 2 ? (
+        <div className="w-full flex flex-col gap-5 justify-center">
+          {userPosts?.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
       ) : (
         <div className="w-full flex flex-col gap-5 justify-center">
           {posts?.map((post) => (
-            <PostCard
-              key={post._id}
-              post={post}
-            />
+            <PostCard key={post._id} post={post} />
           ))}
         </div>
       )}

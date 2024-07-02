@@ -1,5 +1,5 @@
 // src/components/Navbar.js
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBell } from "@fortawesome/free-solid-svg-icons";

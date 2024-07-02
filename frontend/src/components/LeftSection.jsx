@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-
+import React from 'react'
+import { useData } from '../contexts/DataContext';
 const LeftSection = () => {
-  const [select, setSelect] = useState(1);
+  const { select,setSelect } = useData();
   return (
     <div className="py-10 px-5">
       <div className="flex flex-col gap-5 w-full items-start text-lg bg-white shadow-lg shadow-blue-300  p-5 rounded-lg">
