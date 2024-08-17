@@ -9,7 +9,8 @@ const getRoutes = require("./routes/getRoutes");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const { job } = require("./cron");
+job.start();
 const app = express();
 
 // Checking the server
