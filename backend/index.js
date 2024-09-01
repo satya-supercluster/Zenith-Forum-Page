@@ -15,7 +15,7 @@ const app = express();
 
 // Checking the server
 app.get("/", (req, res) => {
-  res.send(process.env);
+  res.send("process.env");
 });
 app.use(cors());
 
