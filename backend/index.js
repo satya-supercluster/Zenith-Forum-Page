@@ -10,7 +10,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { job } = require("./cron");
+const { job2 } = require("./cron2");
 job.start();
+job2.start();
 const app = express();
 
 // Checking the server
