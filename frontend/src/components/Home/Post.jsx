@@ -7,7 +7,6 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import CommentDialog from "./CommentDialog";
 import axios from "axios";
 import { toast } from "sonner";
-// import { setPosts, setSelectedPost } from "@/redux/postSlice";
 import { Badge } from "../Global/badge";
 import { useData } from "../../contexts/DataContext";
 import { useAuth } from "../../contexts/AuthContext";
@@ -20,7 +19,6 @@ const Post = ({ post }) => {
   const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
   const [postLike, setPostLike] = useState(post.likes.length);
   const [comment, setComment] = useState(post.comments);
-  // const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     const inputText = e.target.value;
@@ -130,7 +128,7 @@ const Post = ({ post }) => {
         <div className="flex items-center gap-2">
           <Avatar>
             <AvatarImage src={post.author?.profilePicture} alt="post_image" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <div className="flex items-center gap-3">
             <h1>{post.author?.username}</h1>

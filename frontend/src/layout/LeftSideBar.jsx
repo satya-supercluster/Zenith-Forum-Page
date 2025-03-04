@@ -17,6 +17,7 @@ import { Button } from "../components/Global/button";
 import { useToggle } from "../contexts/ToggelContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
+import CreatePost from "../components/Home/CreatePost";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -35,7 +36,6 @@ const Sidebar = () => {
 
   const navigate = useNavigate();
 
-  // Check if mobile view based on screen width
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -76,7 +76,7 @@ const Sidebar = () => {
         "http://localhost:3000/api/user/logout",
         {
           method: "GET",
-          credentials: "include", // Ensures cookies are sent
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -86,9 +86,9 @@ const Sidebar = () => {
       const data = await response.json();
 
       if (data.success) {
-        dispatch(setAuthUser(null));
-        dispatch(setSelectedPost(null));
-        dispatch(setPosts([]));
+        setAuthUser(null);
+        setSelectedPost(null);
+        setPosts([]);
         navigate("/login");
         toast.success(data.message);
       }
@@ -175,7 +175,7 @@ const Sidebar = () => {
                                         notification.userDetails?.profilePicture
                                       }
                                     />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarFallback>S</AvatarFallback>
                                   </Avatar>
                                   <p className="text-sm">
                                     <span className="font-bold">
@@ -241,7 +241,6 @@ const Sidebar = () => {
             transition={{ duration: 0.3 }}
             className="fixed top-0 left-0 w-64 h-screen shadow-lg z-50 bg-opacity-95 bg-[#0c1631] pt-16"
           >
-
             <div className="overflow-y-auto">
               <ul className="py-2">
                 {menuItems.map((item) => (
@@ -249,8 +248,8 @@ const Sidebar = () => {
                     <motion.a
                       whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={()=>{sidebarHandler(item.name); toggleMobileMenu();}}
                       className="flex items-center px-4 py-3 cursor-pointer"
-                      onClick={toggleMobileMenu}
                     >
                       <item.icon size={24} />
                       <span className="ml-4 text-sm font-medium">

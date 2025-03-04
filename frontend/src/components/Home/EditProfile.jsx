@@ -84,7 +84,7 @@ const EditProfile = () => {
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage src={user?.profilePicture} alt="post_image" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>S</AvatarFallback>
             </Avatar>
             <div>
               <h1 className="font-bold text-sm">{user?.username}</h1>

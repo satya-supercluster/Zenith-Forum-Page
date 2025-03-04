@@ -37,7 +37,7 @@ const Profile = () => {
                 src={userProfile?.profilePicture}
                 alt="profilephoto"
               />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>S</AvatarFallback>
             </Avatar>
           </section>
           <section>
@@ -49,20 +49,20 @@ const Profile = () => {
                     <Link to="/account/edit">
                       <Button
                         variant="secondary"
-                        className="hover:bg-gray-200 h-8"
+                        className="hover:bg-gray-700 h-8"
                       >
                         Edit profile
                       </Button>
                     </Link>
                     <Button
                       variant="secondary"
-                      className="hover:bg-gray-200 h-8"
+                      className="hover:bg-gray-700 h-8"
                     >
                       View archive
                     </Button>
                     <Button
                       variant="secondary"
-                      className="hover:bg-gray-200 h-8"
+                      className="hover:bg-gray-700 h-8"
                     >
                       Ad tools
                     </Button>
@@ -110,9 +110,6 @@ const Profile = () => {
                   <AtSign />{" "}
                   <span className="pl-1">{userProfile?.username}</span>{" "}
                 </Badge>
-                <span>Eat</span>
-                <span>Code</span>
-                <span>Sleep</span>
               </div>
             </div>
           </section>
@@ -135,8 +132,6 @@ const Profile = () => {
             >
               SAVED
             </span>
-            {/* <span className="py-3 cursor-pointer">REELS</span>
-            <span className="py-3 cursor-pointer">TAGS</span> */}
           </div>
           <div className="grid grid-cols-3 gap-1">
             {displayedPost?.map((post) => {

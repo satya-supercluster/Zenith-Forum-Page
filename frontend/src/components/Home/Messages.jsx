@@ -19,7 +19,7 @@ const Messages = ({ selectedUser }) => {
         <div className="flex flex-col items-center justify-center">
           <Avatar className="h-20 w-20">
             <AvatarImage src={selectedUser?.profilePicture} alt="profile" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>S</AvatarFallback>
           </Avatar>
           <span>{selectedUser?.username}</span>
           <Link to={`/profile/${selectedUser?._id}`}>

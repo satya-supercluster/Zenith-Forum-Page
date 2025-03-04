@@ -57,7 +57,7 @@ const ChatPage = () => {
               >
                 <Avatar className="w-14 h-14">
                   <AvatarImage src={suggestedUser?.profilePicture} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback>S</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="font-medium">{suggestedUser?.username}</span>
