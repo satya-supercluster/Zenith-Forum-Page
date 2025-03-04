@@ -6,10 +6,13 @@ const useGetSuggestedUsers = () => {
   useEffect(() => {
     const fetchSuggestedUsers = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/user/suggested", {
-          method: "GET",
-          credentials: "include",
-        });
+        const res = await fetch(
+          "https://zenith-forum-page.onrender.com/api/user/suggested",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         const data = await res.json();
 

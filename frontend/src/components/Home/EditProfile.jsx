@@ -48,7 +48,7 @@ const EditProfile = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:3000/api/user/profile/edit",
+        "https://zenith-forum-page.onrender.com/api/user/profile/edit",
         {
           method: "POST",
           body: formData,

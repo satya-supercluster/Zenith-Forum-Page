@@ -34,7 +34,7 @@ const CommentDialog = ({ open, setOpen }) => {
   const deletePostHandler = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/post/delete/${post?._id}`,
+        `https://zenith-forum-page.onrender.com/api/post/delete/${post?._id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -64,7 +64,7 @@ const CommentDialog = ({ open, setOpen }) => {
   const sendMessageHandler = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/post/${selectedPosts?._id}/comment`,
+        `https://zenith-forum-page.onrender.com/api/post/${selectedPosts?._id}/comment`,
         {
           method: "POST",
           headers: {

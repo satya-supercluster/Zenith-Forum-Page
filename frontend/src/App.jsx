@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const socketio = io("http://localhost:3000", {
+      const socketio = io("https://zenith-forum-page.onrender.com", {
         query: {
           userId: user?._id,
         },

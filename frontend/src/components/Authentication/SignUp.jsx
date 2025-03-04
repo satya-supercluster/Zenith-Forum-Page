@@ -23,14 +23,17 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:3000/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Equivalent to withCredentials: true in Axios
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://zenith-forum-page.onrender.com/api/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Equivalent to withCredentials: true in Axios
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json(); // Parsing the response
 

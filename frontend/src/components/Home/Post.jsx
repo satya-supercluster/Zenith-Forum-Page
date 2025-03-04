@@ -33,7 +33,7 @@ const Post = ({ post }) => {
     try {
       const action = liked ? "dislike" : "like";
       const res = await fetch(
-        `http://localhost:3000/api/post/${post._id}/${action}`,
+        `https://zenith-forum-page.onrender.com/api/post/${post._id}/${action}`,
         {
           method: "GET",
           credentials: "include",
@@ -69,7 +69,7 @@ const Post = ({ post }) => {
   const commentHandler = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/post/${post._id}/comment`,
+        `https://zenith-forum-page.onrender.com/api/post/${post._id}/comment`,
         {
           method: "POST",
           headers: {
@@ -103,7 +103,7 @@ const Post = ({ post }) => {
   const deletePostHandler = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/post/delete/${post?._id}`,
+        `https://zenith-forum-page.onrender.com/api/post/delete/${post?._id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -134,7 +134,7 @@ const Post = ({ post }) => {
   const bookmarkHandler = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/post/${post?._id}/bookmark`,
+        `https://zenith-forum-page.onrender.com/api/post/${post?._id}/bookmark`,
         {
           method: "GET",
           credentials: "include",

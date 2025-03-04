@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const corsOptions = {
-  origin: process.env.URL,
+  origin: `${process.env.URL}`,
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -29,6 +29,10 @@ app.use(cors(corsOptions));
 app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 app.use("/api/message", messageRoute);
+
+app.get("/api/cron", (req, res) => {
+  res.send("Backend is up and running");
+});
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 app.get("*", (req, res) => {

@@ -7,7 +7,7 @@ const useGetAllMessage = () => {
         const fetchAllMessage = async () => {
             try {
               const res = await fetch(
-                `http://localhost:3000/api/message/all/${selectedUser?._id}`,
+                `https://zenith-forum-page.onrender.com/api/message/all/${selectedUser?._id}`,
                 {
                   method: "GET",
                   credentials: "include",

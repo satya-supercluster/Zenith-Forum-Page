@@ -7,7 +7,7 @@ const useGetUserProfile = (userId) => {
         const fetchUserProfile = async () => {
             try {
               const response = await fetch(
-                `http://localhost:3000/api/user/${userId}/profile`,
+                `https://zenith-forum-page.onrender.com/api/user/${userId}/profile`,
                 {
                   method: "GET",
                   credentials: "include", // Ensures cookies are sent

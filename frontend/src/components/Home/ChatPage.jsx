@@ -18,7 +18,7 @@ const ChatPage = () => {
   const sendMessageHandler = async (receiverId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/message/send/${receiverId}`,
+        `https://zenith-forum-page.onrender.com/api/message/send/${receiverId}`,
         {
           method: "POST",
           headers: {

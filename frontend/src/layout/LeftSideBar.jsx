@@ -73,7 +73,7 @@ const Sidebar = () => {
   const logoutHandler=async()=>{
     try {
       const response = await fetch(
-        "http://localhost:3000/api/user/logout",
+        "https://zenith-forum-page.onrender.com/api/user/logout",
         {
           method: "GET",
           credentials: "include",

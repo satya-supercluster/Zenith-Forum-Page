@@ -22,14 +22,17 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:3000/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", 
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://zenith-forum-page.onrender.com/api/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json(); 
 

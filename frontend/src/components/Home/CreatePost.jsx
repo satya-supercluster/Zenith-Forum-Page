@@ -35,12 +35,15 @@ const CreatePost = ({ open, setOpen }) => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:3000/api/post/addpost", {
-        method: "POST",
-        headers: {},
-        credentials: "include",
-        body: formData,
-      });
+      const res = await fetch(
+        "https://zenith-forum-page.onrender.com/api/post/addpost",
+        {
+          method: "POST",
+          headers: {},
+          credentials: "include",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
 

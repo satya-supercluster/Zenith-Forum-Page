@@ -6,10 +6,13 @@ const useGetAllPost = () => {
     useEffect(() => {
         const fetchAllPost = async () => {
             try {
-              const res = await fetch("http://localhost:3000/api/post/all", {
-                method: "GET",
-                credentials: "include",
-              });
+              const res = await fetch(
+                "https://zenith-forum-page.onrender.com/api/post/all",
+                {
+                  method: "GET",
+                  credentials: "include",
+                }
+              );
 
               const data = await res.json();
 
