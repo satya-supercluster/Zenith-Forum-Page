@@ -110,9 +110,9 @@ const Profile = () => {
                   <AtSign />{" "}
                   <span className="pl-1">{userProfile?.username}</span>{" "}
                 </Badge>
-                <span>🤯Learn code with patel mernstack style</span>
-                <span>🤯Turing code into fun</span>
-                <span>🤯DM for collaboration</span>
+                <span>Eat</span>
+                <span>Code</span>
+                <span>Sleep</span>
               </div>
             </div>
           </section>
@@ -135,8 +135,8 @@ const Profile = () => {
             >
               SAVED
             </span>
-            <span className="py-3 cursor-pointer">REELS</span>
-            <span className="py-3 cursor-pointer">TAGS</span>
+            {/* <span className="py-3 cursor-pointer">REELS</span>
+            <span className="py-3 cursor-pointer">TAGS</span> */}
           </div>
           <div className="grid grid-cols-3 gap-1">
             {displayedPost?.map((post) => {
