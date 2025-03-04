@@ -1,19 +1,29 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useData } from "../contexts/DataContext";
 
 const useGetAllMessage = () => {
-    const {selectedUser} = useAuth;
+    const {selectedUser,setMessages} = useData();
     useEffect(() => {
         const fetchAllMessage = async () => {
             try {
-                const res = await axios.get(`https:localhost:3000/api/message/all/${selectedUser?._id}`, { withCredentials: true });
-                if (res.data.success) {  
-                    dispatch(setMessages(res.data.messages));
+              const res = await fetch(
+                `http://localhost:3000/api/message/all/${selectedUser?._id}`,
+                {
+                  method: "GET",
+                  credentials: "include", // Equivalent to withCredentials: true in Axios
                 }
+              );
+
+              const data = await res.json(); // Parse the response
+
+              if (data.success) {
+                setMessages(data.messages);
+              }
             } catch (error) {
-                console.log(error);
+              console.log(error);
             }
+
         }
         fetchAllMessage();
     }, [selectedUser]);

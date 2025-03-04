@@ -7,14 +7,21 @@ const useGetAllPost = () => {
     useEffect(() => {
         const fetchAllPost = async () => {
             try {
-                const res = await axios.get('https://localhost:3000/api/post/all', { withCredentials: true });
-                if (res.data.success) { 
-                    console.log(res.data.posts);
-                    dispatch(setPosts(res.data.posts));
-                }
+              const res = await fetch("http://localhost:3000/api/post/all", {
+                method: "GET",
+                credentials: "include",
+              });
+
+              const data = await res.json();
+
+              if (data.success) {
+                console.log(data.posts);
+                setPosts(data.posts);
+              }
             } catch (error) {
-                console.log(error);
+              console.log(error);
             }
+
         }
         fetchAllPost();
     }, []);

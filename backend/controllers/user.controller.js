@@ -166,8 +166,8 @@ export const getSuggestedUsers = async (req, res) => {
 };
 export const followOrUnfollow = async (req, res) => {
     try {
-        const followKrneWala = req.id; // patel
-        const jiskoFollowKrunga = req.params.id; // shivani
+        const followKrneWala = req.id;
+        const jiskoFollowKrunga = req.params.id;
         if (followKrneWala === jiskoFollowKrunga) {
             return res.status(400).json({
                 message: 'You cannot follow/unfollow yourself',
