@@ -6,7 +6,6 @@ import { Button } from '../ui/button';
 import { readFileAsDataURL } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import axios from 'axios';
 import { useData } from '../../contexts/DataContext';
 
 const CreatePost = ({ open, setOpen }) => {
@@ -33,22 +32,29 @@ const CreatePost = ({ open, setOpen }) => {
     if (imagePreview) formData.append("image", file);
     try {
       setLoading(true);
-      const res = await axios.post('https://localhost:3000/api/post/addpost', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
+
+      const res = await fetch("http://localhost:3000/api/post/addpost", {
+        method: "POST",
+        headers: {},
+        credentials: "include",
+        body: formData,
       });
-      if (res.data.success) {
-        setPosts([res.data.post, ...posts]);
-        toast.success(res.data.message);
+
+      const data = await res.json();
+
+      if (data.success) {
+        setPosts([data.post, ...posts]);
+        toast.success(data.message);
         setOpen(false);
+      } else {
+        throw new Error(data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
+
   }
 
   return (
