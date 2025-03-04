@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, Menu, User } from "lucide-react";
 import { useToggle } from "../../contexts/ToggelContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Navbar = ({ isLoggedIn = false }) => {
+
+  const {auth} =useAuth();
+  const user=auth?.user;
+
   const [isMobile, setIsMobile] = useState(false);
   const { isMobileSidebarOpen, setIsMobileSidebarOpen } = useToggle();
 
@@ -26,9 +33,8 @@ const Navbar = ({ isLoggedIn = false }) => {
   };
 
   return (
-    // Conditionally add sticky classes when not on mobile
     <div
-      className={`w-full bg-[#0c1631] text-white sticky top-0 z-50 shadow-blue-400 shadow-md`}
+      className={`w-full bg-[#0c1631] text-white fixed top-0 z-50 md:hover:shadow-blue-400 shadow-gray-800 shadow-md`}
     >
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -63,13 +69,18 @@ const Navbar = ({ isLoggedIn = false }) => {
           </div>
 
           {/* Right: Sign In or Avatar */}
-          {isLoggedIn ? (
+          {user ? (
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 rounded-full p-2 cursor-pointer"
+              className="rounded-full cursor-pointer"
             >
-              <User size={20} />
+              <Link to={`/profile/${user?._id}`}>
+                <Avatar>
+                  <AvatarImage src={user?.profilePicture} alt="post_image" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
             </motion.div>
           ) : (
             <motion.button

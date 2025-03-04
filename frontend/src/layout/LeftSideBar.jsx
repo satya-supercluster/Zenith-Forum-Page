@@ -54,7 +54,7 @@ const Sidebar = () => {
     <motion.div
       className="fixed pt-16 left-0 top-0 h-screen  border-r border-gray-200 flex flex-col z-50 bg-[#101a3b] bg-opacity-95"
       animate={{
-        width: expanded ? "240px" : "70px",
+        width: expanded ? "175px" : "70px",
       }}
       transition={{ duration: 0.3 }}
     >
@@ -63,9 +63,19 @@ const Sidebar = () => {
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={() => setExpanded(!expanded)}
-          className="p-1 rounded-full"
+          className="p-1 rounded-full flex items-center justify-between"
         >
           <Menu size={24} />
+          {expanded && (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="ml-4 text-sm font-medium"
+            >
+              Menu
+            </motion.span>
+          )}
         </motion.button>
       </div>
 
