@@ -29,7 +29,7 @@ const Sidebar = () => {
     setIsCreatePostOpen,
   } = useToggle();
 
-  const {auth}=useAuth();
+  const { auth, setAuthUser, setSelectedPost } = useAuth();
   const user=auth?.user;
 
   const {likeNotification} =useData();
@@ -90,7 +90,6 @@ const Sidebar = () => {
         setSelectedPost(null);
         setPosts([]);
         navigate("/login");
-        toast.success(data.message);
       }
     } catch (error) {
       toast.error(error.message || "Logout failed");

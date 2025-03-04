@@ -5,10 +5,10 @@ export const DataProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [posts,setPosts]=useState(null);
   const [selectedPosts,setSelectedPosts]=useState(null);
-  const [messages,setMessages]=useState(null);
+  const [messages,setMessages]=useState([]);
   const [socket,setSocket]=useState(null);
   const [likeNotification,setLikeNotification]=useState([]);
-  const [onlineUsers,setOnlineUsers]=useState(null);
+  const [onlineUsers,setOnlineUsers]=useState([]);
   const [refresh,setRefresh]=useState(false);
 
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useData } from "../contexts/DataContext";
 
 const useGetAllMessage = () => {
-    const {selectedUser,setMessages} = useData();
+    const {selectedUser,setMessages,messages} = useData();
     useEffect(() => {
         const fetchAllMessage = async () => {
             try {
@@ -10,11 +10,11 @@ const useGetAllMessage = () => {
                 `http://localhost:3000/api/message/all/${selectedUser?._id}`,
                 {
                   method: "GET",
-                  credentials: "include", // Equivalent to withCredentials: true in Axios
+                  credentials: "include",
                 }
               );
 
-              const data = await res.json(); // Parse the response
+              const data = await res.json();
 
               if (data.success) {
                 setMessages(data.messages);
@@ -24,7 +24,7 @@ const useGetAllMessage = () => {
             }
 
         }
-        fetchAllMessage();
+        if (selectedUser) {fetchAllMessage(); console.log(messages);}
     }, [selectedUser]);
 };
 export default useGetAllMessage;

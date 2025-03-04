@@ -74,7 +74,7 @@ const Login = () => {
               htmlFor="username"
               className="block text-sm font-medium text-gray-200"
             >
-              Sc. Number
+              Username
             </label>
             <input
               id="username"
