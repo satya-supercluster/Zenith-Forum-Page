@@ -1,48 +1,42 @@
-// Requires
-const express = require("express");
-const { default: mongoose } = require("mongoose");
-const dotenv = require("dotenv");
+import express, { urlencoded } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import connectDB from "./utils/db.js";
+import userRoute from "./routes/user.route.js";
+import postRoute from "./routes/post.route.js";
+import messageRoute from "./routes/message.route.js";
+import { app, server } from "./socket/socket.js";
+import path from "path";
+import morgan from "morgan";
 dotenv.config();
-const postRoutes = require("./routes/postRoutes");
-const authRoutes = require("./routes/authRoutes");
-const getRoutes = require("./routes/getRoutes");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const { job } = require("./cron");
-const { job2 } = require("./cron2");
-job.start();
-job2.start();
-const app = express();
-
-// Checking the server
-app.get("/", (req, res) => {
-  res.send("process.env");
-});
-app.use(cors());
-
-// middlewares
 app.use(morgan("tiny"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const PORT = process.env.PORT || 3000;
 
-//Routers
-app.use("/api/post", postRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/get", getRoutes);
+const __dirname = path.resolve();
 
-//Mongoose Connection
-mongoose
-  .connect(`${process.env.MONGO_URL}`)
-  .then(() => {
-    console.log("MONGOOSE CONNECTED");
-  })
-  .catch((e) => {
-    console.log(`Not Connencted to MONGOOSE: ${e}`);
-    console.log(`${process.env.MONGO_URL}`);
-  });
+//middlewares
+app.use(express.json());
+app.use(cookieParser());
+app.use(urlencoded({ extended: true }));
+const corsOptions = {
+  // origin: process.env.URL,
+  origin: true,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
-// Listening the server
-app.listen(process.env.PORT, () => {
-  console.log(`Here I listened something at PORT ${process.env.PORT}`);
+// yha pr apni api ayengi
+app.use("/api/user", userRoute);
+app.use("/api/post", postRoute);
+app.use("/api/message", messageRoute);
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+});
+
+server.listen(PORT, () => {
+  connectDB();
+  console.log(`Server listen at port ${PORT}`);
 });
