@@ -8,19 +8,18 @@ import { Button } from "../ui/button";
 import Comment from "./Comment";
 import axios from "axios";
 import { toast } from "sonner";
-// import { setPosts } from "@/redux/postSlice";
+import { useData } from "../../contexts/DataContext";
 
 const CommentDialog = ({ open, setOpen }) => {
   const [text, setText] = useState("");
-//   const { selectedPost, posts } = useSelector((store) => store.post);
+  const { selectedPost, posts, setPosts } = useData();
   const [comment, setComment] = useState([]);
-//   const dispatch = useDispatch();
 
-//   useEffect(() => {
-//     if (selectedPost) {
-//       setComment(selectedPost.comments);
-//     }
-//   }, [selectedPost]);
+  useEffect(() => {
+    if (selectedPost) {
+      setComment(selectedPost.comments);
+    }
+  }, [selectedPost]);
 
   const changeEventHandler = (e) => {
     const inputText = e.target.value;
@@ -34,7 +33,7 @@ const CommentDialog = ({ open, setOpen }) => {
   const sendMessageHandler = async () => {
     try {
       const res = await axios.post(
-        `https://instaclone-g9h5.onrender.com/api/v1/post/${selectedPost?._id}/comment`,
+        `http://localhost:3000/api/post/${selectedPost?._id}/comment`,
         { text },
         {
           headers: {
@@ -53,7 +52,7 @@ const CommentDialog = ({ open, setOpen }) => {
             ? { ...p, comments: updatedCommentData }
             : p
         );
-        // dispatch(setPosts(updatedPostData));
+        setPosts(updatedPostData);
         toast.success(res.data.message);
         setText("");
       }

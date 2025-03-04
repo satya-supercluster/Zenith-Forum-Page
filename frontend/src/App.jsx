@@ -12,7 +12,14 @@ import { Loader2 } from "lucide-react";
 function App() {
   const {auth}=useAuth();
   const user=auth?.user;
-  const {socket,setSocket,setLikeNotification,setOnlineUsers,refresh}=useData();
+
+  const {
+    socket,
+    setSocket,
+    setRealTimeNotification,
+    setOnlineUsers
+  } = useData();
+
   useEffect(() => {
     if (user) {
       const socketio = io("http://localhost:3000", {
@@ -23,13 +30,12 @@ function App() {
       });
       setSocket(socketio);
 
-      // listen all the events
       socketio.on("getOnlineUsers", (onlineUsers) => {
         setOnlineUsers(onlineUsers);
       });
 
       socketio.on("notification", (notification) => {
-        setLikeNotification(notification);
+        setRealTimeNotification(notification);
       });
 
       return () => {
@@ -40,7 +46,7 @@ function App() {
       socket.close();
       setSocket(null);
     }
-  }, [user,refresh]);
+  }, [user]);
 
 
   return (
