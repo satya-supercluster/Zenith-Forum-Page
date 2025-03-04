@@ -14,8 +14,8 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("posts");
 
   const { auth } = useAuth();
-  const user=auth?.user;
-  const userProfile=auth?.userProfile;
+  const user = auth?.user;
+  const userProfile = auth?.userProfile;
 
   const isLoggedInUserProfile = user?._id === userProfile?._id;
   const isFollowing = false;
@@ -28,11 +28,12 @@ const Profile = () => {
     activeTab === "posts" ? userProfile?.posts : userProfile?.bookmarks;
 
   return (
-    <div className="flex max-w-5xl justify-center mx-auto pl-10">
-      <div className="flex flex-col gap-20 p-8">
-        <div className="grid grid-cols-2">
+    <div className="flex justify-center mx-auto px-4 sm:px-10">
+      <div className="flex flex-col gap-10 p-4 sm:p-8 max-w-5xl">
+        {/* Header */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <section className="flex items-center justify-center">
-            <Avatar className="h-32 w-32">
+            <Avatar className="h-24 w-24 md:h-32 md:w-32">
               <AvatarImage
                 src={userProfile?.profilePicture}
                 alt="profilephoto"
@@ -41,9 +42,11 @@ const Profile = () => {
             </Avatar>
           </section>
           <section>
-            <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-2">
-                <span>{userProfile?.username}</span>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xl font-bold">
+                  {userProfile?.username}
+                </span>
                 {isLoggedInUserProfile ? (
                   <>
                     <Link to="/account/edit">
@@ -82,22 +85,22 @@ const Profile = () => {
                   </Button>
                 )}
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <p>
                   <span className="font-semibold">
-                    {userProfile?.posts.length}{" "}
+                    {userProfile?.posts.length || 0}{" "}
                   </span>
                   posts
                 </p>
                 <p>
                   <span className="font-semibold">
-                    {userProfile?.followers.length}{" "}
+                    {userProfile?.followers.length || 0}{" "}
                   </span>
                   followers
                 </p>
                 <p>
                   <span className="font-semibold">
-                    {userProfile?.following.length}{" "}
+                    {userProfile?.following.length || 0}{" "}
                   </span>
                   following
                 </p>
@@ -114,7 +117,8 @@ const Profile = () => {
             </div>
           </section>
         </div>
-        <div className="border-t border-t-gray-200">
+        {/* Posts & Saved Tabs */}
+        <div className="border-t border-t-gray-200 pt-4">
           <div className="flex items-center justify-center gap-10 text-sm">
             <span
               className={`py-3 cursor-pointer ${
@@ -133,30 +137,28 @@ const Profile = () => {
               SAVED
             </span>
           </div>
-          <div className="grid grid-cols-3 gap-1">
-            {displayedPost?.map((post) => {
-              return (
-                <div key={post?._id} className="relative group cursor-pointer">
-                  <img
-                    src={post.image}
-                    alt="postimage"
-                    className="rounded-sm my-2 w-full aspect-square object-cover"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex items-center text-white space-x-4">
-                      <button className="flex items-center gap-2 hover:text-gray-300">
-                        <Heart />
-                        <span>{post?.likes.length}</span>
-                      </button>
-                      <button className="flex items-center gap-2 hover:text-gray-300">
-                        <MessageCircle />
-                        <span>{post?.comments.length}</span>
-                      </button>
-                    </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+            {displayedPost?.map((post) => (
+              <div key={post?._id} className="relative group cursor-pointer">
+                <img
+                  src={post.image}
+                  alt="postimage"
+                  className="rounded-sm my-2 w-full aspect-square object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center text-white space-x-4">
+                    <button className="flex items-center gap-2 hover:text-gray-300">
+                      <Heart />
+                      <span>{post?.likes.length}</span>
+                    </button>
+                    <button className="flex items-center gap-2 hover:text-gray-300">
+                      <MessageCircle />
+                      <span>{post?.comments.length}</span>
+                    </button>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>

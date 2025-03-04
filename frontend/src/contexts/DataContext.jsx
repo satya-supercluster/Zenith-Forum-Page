@@ -7,7 +7,7 @@ export const DataProvider = ({ children }) => {
   const [selectedPosts,setSelectedPosts]=useState(null);
   const [messages,setMessages]=useState(null);
   const [socket,setSocket]=useState(null);
-  const [likeNotification,setLikeNotification]=useState(null);
+  const [likeNotification,setLikeNotification]=useState([]);
   const [onlineUsers,setOnlineUsers]=useState(null);
   const [refresh,setRefresh]=useState(false);
 

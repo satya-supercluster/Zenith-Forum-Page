@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
 const Comment = ({ comment }) => {
   return (
     <div className="my-2">
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center bg-gray-500 text-gray-50">
         <Avatar>
           <AvatarImage src={comment?.author?.profilePicture} />
           <AvatarFallback>S</AvatarFallback>

@@ -5,7 +5,6 @@ import { Bookmark, MessageCircle, MoreHorizontal, Send } from "lucide-react";
 import { Button } from "../Global/button";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import CommentDialog from "./CommentDialog";
-import axios from "axios";
 import { toast } from "sonner";
 import { Badge } from "../Global/badge";
 import { useData } from "../../contexts/DataContext";
@@ -14,8 +13,9 @@ import { useAuth } from "../../contexts/AuthContext";
 const Post = ({ post }) => {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
-  const { posts, setPosts, setSelectedPost } = useData();
+  const { auth } = useAuth();
+  const user=auth?.user;
+  const { posts, setPosts, setSelectedPosts } = useData();
   const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
   const [postLike, setPostLike] = useState(post.likes.length);
   const [comment, setComment] = useState(post.comments);
@@ -32,17 +32,21 @@ const Post = ({ post }) => {
   const likeOrDislikeHandler = async () => {
     try {
       const action = liked ? "dislike" : "like";
-      const res = await axios.get(
-        `https://localhost:3000/api/post/${post._id}/${action}`,
-        { withCredentials: true }
+      const res = await fetch(
+        `http://localhost:3000/api/post/${post._id}/${action}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
-      console.log(res.data);
-      if (res.data.success) {
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success) {
         const updatedLikes = liked ? postLike - 1 : postLike + 1;
         setPostLike(updatedLikes);
         setLiked(!liked);
-
-        // apne post ko update krunga
         const updatedPostData = posts.map((p) =>
           p._id === post._id
             ? {
@@ -54,76 +58,101 @@ const Post = ({ post }) => {
             : p
         );
         setPosts(updatedPostData);
-        toast.success(res.data.message);
+        toast.success(data.message);
       }
     } catch (error) {
       console.log(error);
     }
+
   };
 
   const commentHandler = async () => {
     try {
-      const res = await axios.post(
-        `https://localhost:3000/api/post/${post._id}/comment`,
-        { text },
+      const res = await fetch(
+        `http://localhost:3000/api/post/${post._id}/comment`,
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          credentials: "include",
+          body: JSON.stringify({ text }),
         }
       );
-      console.log(res.data);
-      if (res.data.success) {
-        const updatedCommentData = [...comment, res.data.comment];
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success) {
+        const updatedCommentData = [...comment, data.comment];
         setComment(updatedCommentData);
 
         const updatedPostData = posts.map((p) =>
           p._id === post._id ? { ...p, comments: updatedCommentData } : p
         );
         setPosts(updatedPostData);
-        toast.success(res.data.message);
+        toast.success(data.message);
         setText("");
       }
     } catch (error) {
       console.log(error);
     }
+
   };
 
   const deletePostHandler = async () => {
     try {
-      const res = await axios.delete(
-        `https://localhost:3000/api/post/delete/${post?._id}`,
-        { withCredentials: true }
+      const res = await fetch(
+        `http://localhost:3000/api/post/delete/${post?._id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
       );
-      if (res.data.success) {
+
+      const data = await res.json();
+
+      if (data.success) {
         const updatedPostData = posts.filter(
           (postItem) => postItem?._id !== post?._id
         );
         setPosts(updatedPostData);
-        toast.success(res.data.message);
+        toast.success(data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.messsage);
+      try {
+        const errData = await error.response.json();
+        toast.error(errData.message);
+      } catch {
+        toast.error("Something went wrong");
+      }
     }
+
   };
 
   const bookmarkHandler = async () => {
     try {
-      const res = await axios.get(
-        `https://localhost:3000/api/post/${post?._id}/bookmark`,
-        { withCredentials: true }
+      const res = await fetch(
+        `http://localhost:3000/api/post/${post?._id}/bookmark`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
-      if (res.data.success) {
-        toast.success(res.data.message);
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success(data.message);
       }
     } catch (error) {
       console.log(error);
     }
+
   };
   return (
-    <div className="my-8 w-full max-w-sm mx-auto">
+    <div className="my-8 w-full max-w-sm mx-auto shadow-[0_5px_15px_rgba(0,0,0,0)] p-2 shadow-gray-800 rounded-lg">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Avatar>
@@ -166,11 +195,13 @@ const Post = ({ post }) => {
           </DialogContent>
         </Dialog>
       </div>
-      <img
-        className="rounded-sm my-2 w-full aspect-square object-cover"
-        src={post.image}
-        alt="post_img"
-      />
+      <div className="rounded-lg m-2 overflow-hidden">
+        <img
+          className="w-full aspect-square object-cover"
+          src={post.image}
+          alt="post_img"
+        />
+      </div>
 
       <div className="flex items-center justify-between my-2">
         <div className="flex items-center gap-3">
@@ -190,7 +221,7 @@ const Post = ({ post }) => {
 
           <MessageCircle
             onClick={() => {
-              dispatch(setSelectedPost(post));
+              setSelectedPosts(post);
               setOpen(true);
             }}
             className="cursor-pointer hover:text-gray-600"
@@ -210,7 +241,7 @@ const Post = ({ post }) => {
       {comment.length > 0 && (
         <span
           onClick={() => {
-            dispatch(setSelectedPost(post));
+            setSelectedPosts(post);
             setOpen(true);
           }}
           className="cursor-pointer text-sm text-gray-400"
@@ -225,7 +256,7 @@ const Post = ({ post }) => {
           placeholder="Add a comment..."
           value={text}
           onChange={changeEventHandler}
-          className="outline-none text-sm w-full"
+          className="outline-none text-sm w-full bg-transparent text-gray-50 py-1"
         />
         {text && (
           <span

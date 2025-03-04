@@ -4,22 +4,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
 import { Link } from "react-router-dom";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "../Global/button";
-// import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
-import axios from "axios";
 import { toast } from "sonner";
 import { useData } from "../../contexts/DataContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const CommentDialog = ({ open, setOpen }) => {
   const [text, setText] = useState("");
-  const { selectedPost, posts, setPosts } = useData();
+  const { selectedPosts, posts, setPosts } = useData();
   const [comment, setComment] = useState([]);
+  const {auth}=useAuth();
+  const user=auth?.user;
 
   useEffect(() => {
-    if (selectedPost) {
-      setComment(selectedPost.comments);
+    if (selectedPosts) {
+      setComment(selectedPosts.comments);
     }
-  }, [selectedPost]);
+  }, [selectedPosts]);
 
   const changeEventHandler = (e) => {
     const inputText = e.target.value;
@@ -30,65 +31,99 @@ const CommentDialog = ({ open, setOpen }) => {
     }
   };
 
-  const sendMessageHandler = async () => {
+  const deletePostHandler = async () => {
     try {
-      const res = await axios.post(
-        `http://localhost:3000/api/post/${selectedPost?._id}/comment`,
-        { text },
+      const res = await fetch(
+        `http://localhost:3000/api/post/delete/${post?._id}`,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
+          method: "DELETE",
+          credentials: "include",
         }
       );
 
-      if (res.data.success) {
-        const updatedCommentData = [...comment, res.data.comment];
+      const data = await res.json();
+
+      if (data.success) {
+        const updatedPostData = posts.filter(
+          (postItem) => postItem?._id !== post?._id
+        );
+        setPosts(updatedPostData);
+        toast.success(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      try {
+        const errData = await error.response.json();
+        toast.error(errData.message);
+      } catch {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  const sendMessageHandler = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/post/${selectedPosts?._id}/comment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ text }),
+        }
+      );
+
+      const res = await response.json();
+
+      if (res.success) {
+        const updatedCommentData = [...comment, res.comment];
         setComment(updatedCommentData);
 
         const updatedPostData = posts.map((p) =>
-          p._id === selectedPost._id
+          p._id === selectedPosts._id
             ? { ...p, comments: updatedCommentData }
             : p
         );
         setPosts(updatedPostData);
-        toast.success(res.data.message);
+        toast.success(res.message);
         setText("");
+      } else {
+        console.error("Comment post failed:", res.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error posting comment:", error);
     }
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} className="md:h-[50vh] h-[65vh]">
       <DialogContent
         onInteractOutside={() => setOpen(false)}
         className="max-w-5xl p-0 flex flex-col"
       >
         <div className="flex flex-1">
-          <div className="w-1/2">
+          <div className="max-md:hidden md:w-1/2">
             <img
-              src={selectedPost?.image}
+              src={selectedPosts?.image}
               alt="post_img"
               className="w-full h-full object-cover rounded-l-lg"
             />
           </div>
-          <div className="w-1/2 flex flex-col justify-between">
+          <div className="w-1/2 max-md:w-full flex flex-col justify-between">
             <div className="flex items-center justify-between p-4">
               <div className="flex gap-3 items-center">
                 <Link>
                   <Avatar>
-                    <AvatarImage src={selectedPost?.author?.profilePicture} />
+                    <AvatarImage src={selectedPosts?.author?.profilePicture} />
                     <AvatarFallback>S</AvatarFallback>
                   </Avatar>
                 </Link>
                 <div>
                   <Link className="font-semibold text-xs">
-                    {selectedPost?.author?.username}
+                    {selectedPosts?.author?.username}
                   </Link>
-                  {/* <span className='text-gray-600 text-sm'>Bio here...</span> */}
                 </div>
               </div>
 
@@ -97,10 +132,27 @@ const CommentDialog = ({ open, setOpen }) => {
                   <MoreHorizontal className="cursor-pointer" />
                 </DialogTrigger>
                 <DialogContent className="flex flex-col items-center text-sm text-center">
-                  <div className="cursor-pointer w-full text-[#ED4956] font-bold">
-                    Unfollow
-                  </div>
-                  <div className="cursor-pointer w-full">Add to favorites</div>
+                  {selectedPosts?.author?._id !== user?._id && (
+                    <Button
+                      variant="ghost"
+                      className="cursor-pointer w-fit text-[#ED4956] font-bold"
+                    >
+                      Unfollow
+                    </Button>
+                  )}
+
+                  <Button variant="ghost" className="cursor-pointer w-fit">
+                    Add to favorites
+                  </Button>
+                  {user && user?._id === selectedPosts?.author._id && (
+                    <Button
+                      onClick={deletePostHandler}
+                      variant="ghost"
+                      className="cursor-pointer w-fit"
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </DialogContent>
               </Dialog>
             </div>
@@ -123,6 +175,7 @@ const CommentDialog = ({ open, setOpen }) => {
                   disabled={!text.trim()}
                   onClick={sendMessageHandler}
                   variant="outline"
+                  className="text-gray-50"
                 >
                   Send
                 </Button>

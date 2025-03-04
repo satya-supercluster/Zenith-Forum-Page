@@ -59,7 +59,7 @@ const Login = () => {
   }, [auth]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] ">
       <div className="w-full max-w-md p-8 space-y-6  rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-2xl font-bold">ZENITH</h1>
@@ -79,7 +79,7 @@ const Login = () => {
             <input
               id="username"
               name="username"
-              type="number"
+              type="text"
               required
               value={formData.username}
               onChange={changeEventHandler}

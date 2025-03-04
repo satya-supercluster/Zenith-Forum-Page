@@ -17,23 +17,33 @@ const ChatPage = () => {
 
   const sendMessageHandler = async (receiverId) => {
     try {
-      const res = await axios.post(
+      const response = await fetch(
         `http://localhost:3000/api/message/send/${receiverId}`,
-        { textMessage },
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          credentials: "include",
+          body: JSON.stringify({ textMessage }),
         }
       );
-      if (res.data.success) {
-        setMessages([...messages, res.data.newMessage]);
+
+      const res = await response.json();
+
+      if (res.success) {
+        setMessages((prevMessages) => [
+          ...(prevMessages || []),
+          res.newMessage,
+        ]); 
         setTextMessage("");
+      } else {
+        console.error("Message sending failed:", res.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error sending message:", error);
     }
+
   };
 
   useEffect(() => {
@@ -43,17 +53,18 @@ const ChatPage = () => {
   }, []);
 
   return (
-    <div className="flex ml-[16%] h-screen">
+    <div className="flex ml-[16%] h-[calc(100vh-4rem)]">
       <section className="w-full md:w-1/4 my-8">
-        <h1 className="font-bold mb-4 px-3 text-xl">{user?.username}</h1>
+        <h1 className="font-bold mb-4 px-3 text-xl">Chats</h1>
         <hr className="mb-4 border-gray-300" />
         <div className="overflow-y-auto h-[80vh]">
-          {suggestedUsers?.map((suggestedUser) => {
+          {suggestedUsers?.map((suggestedUser,index) => {
             const isOnline = onlineUsers.includes(suggestedUser?._id);
             return (
               <div
-                onClick={() => dispatch(setSelectedUser(suggestedUser))}
-                className="flex gap-3 items-center p-3 hover:bg-gray-50 cursor-pointer"
+                key={index}
+                onClick={() => setSelectedUser(suggestedUser)}
+                className="flex gap-3 items-center p-3 hover:bg-gray-800 cursor-pointer"
               >
                 <Avatar className="w-14 h-14">
                   <AvatarImage src={suggestedUser?.profilePicture} />
@@ -76,10 +87,10 @@ const ChatPage = () => {
       </section>
       {selectedUser ? (
         <section className="flex-1 border-l border-l-gray-300 flex flex-col h-full">
-          <div className="flex gap-3 items-center px-3 py-2 border-b border-gray-300 sticky top-0 bg-white z-10">
+          <div className="flex gap-3 items-center px-3 py-2 border-b border-gray-300 sticky top-0 z-10">
             <Avatar>
               <AvatarImage src={selectedUser?.profilePicture} alt="profile" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>S</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span>{selectedUser?.username}</span>

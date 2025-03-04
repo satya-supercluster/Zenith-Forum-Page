@@ -17,7 +17,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const EditProfile = () => {
   const imageRef = useRef();
-  const { auth } = useAuth();
+  const { auth,setAuthUser } = useAuth();
   const user=auth?.user;
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
@@ -65,7 +65,7 @@ const EditProfile = () => {
           profilePicture: data.user?.profilePicture,
           gender: data.user.gender,
         };
-        dispatch(setAuthUser(updatedUserData));
+        setAuthUser(updatedUserData);
         navigate(`/profile/${user?._id}`);
         toast.success(data.message);
       }

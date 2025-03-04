@@ -4,7 +4,7 @@ import { useData } from "../../contexts/DataContext";
 const Posts = () => {
   const { posts } = useData();
   return (
-    <div>
+    <div className="px-1">
       {posts?.map((post) => (
         <Post key={post._id} post={post} />
       ))}

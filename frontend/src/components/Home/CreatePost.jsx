@@ -47,6 +47,9 @@ const CreatePost = ({ open, setOpen }) => {
       if (data.success) {
         setPosts([data.post, ...posts]);
         toast.success(data.message);
+        setCaption("");
+        setFile("");
+        setImagePreview("");
         setOpen(false);
       } else {
         throw new Error(data.message);

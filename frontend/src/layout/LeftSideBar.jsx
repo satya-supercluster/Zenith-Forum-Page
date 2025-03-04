@@ -17,7 +17,7 @@ import { Button } from "../components/Global/button";
 import { useToggle } from "../contexts/ToggelContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
-import CreatePost from "../components/Home/CreatePost";
+import { toast } from "sonner";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -210,7 +210,7 @@ const Sidebar = () => {
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => setExpanded(!expanded)}
+          onClick={() => {logoutHandler()}}
           className="p-1 rounded-full  flex items-center justify-between"
         >
           <LogOut size={24} />
