@@ -56,7 +56,7 @@ const Login = () => {
     if (auth?.user) {
       navigate("/");
     }
-  }, []);
+  }, [auth]);
 
   return (
     <div className="flex items-center justify-center min-h-screen ">

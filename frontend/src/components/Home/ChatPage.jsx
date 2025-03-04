@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
+import { Input } from "../Global/input";
+import { Button } from "../Global/button";
 import { MessageCircleCode } from "lucide-react";
 import Messages from "./Messages";
 import { useData } from "../../contexts/DataContext";

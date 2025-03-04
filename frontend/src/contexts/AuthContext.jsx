@@ -29,6 +29,27 @@ export const AuthProvider = ({ children }) => {
     setAuth((prevAuth) => ({ ...prevAuth, selectedUser }));
   };
 
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/user/checkAuth", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        if (data.success) {
+          setAuthUser(data.user);
+        }
+      } catch (error) {
+        console.log("User not logged in:", error);
+      }
+    };
+    verifyUser();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{

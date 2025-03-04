@@ -1,6 +1,6 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
+import { Button } from "../Global/button";
 import { Link } from "react-router-dom";
 import useGetAllMessage from "@/data/useGetAllMessage";
 import useGetRTM from "@/data/useGetRTM";

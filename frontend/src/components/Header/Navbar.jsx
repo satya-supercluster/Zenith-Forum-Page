@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, Menu, User } from "lucide-react";
 import { useToggle } from "../../contexts/ToggelContext";
 import { useAuth } from "../../contexts/AuthContext";
 
-const Navbar = ({ isLoggedIn = false }) => {
-
+const Navbar = () => {
   const {auth} =useAuth();
   const user=auth?.user;
 

@@ -9,6 +9,9 @@ import { io } from "socket.io-client";
 import { useData } from "./contexts/DataContext";
 import { useAuth } from "./contexts/AuthContext";
 import { Loader2 } from "lucide-react";
+import Profile from "./components/Home/Profile"
+import ChatPage from "./components/Home/ChatPage"
+import EditProfile from "./components/Home/EditProfile";
 function App() {
   const {auth}=useAuth();
   const user=auth?.user;
@@ -48,13 +51,15 @@ function App() {
     }
   }, [user]);
 
-
   return (
     
           <Router>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<AuthenticatedRoute component={Home} />} />
+                <Route path="/profile/:id" element={<AuthenticatedRoute component={Profile} />} />
+                <Route path="/account/edit" element={<AuthenticatedRoute component={EditProfile} />} />
+                <Route path="/chat" element={<AuthenticatedRoute component={ChatPage} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 {/* Other routes */}

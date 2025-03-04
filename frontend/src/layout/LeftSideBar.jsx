@@ -10,12 +10,30 @@ import {
   LogOut,
   FileCode
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Popover, PopoverContent, PopoverTrigger } from "../components/Global/popover";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/Global/avatar";
+import { Button } from "../components/Global/button";
 import { useToggle } from "../contexts/ToggelContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useData } from "../contexts/DataContext";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const { isMobileSidebarOpen, setIsMobileSidebarOpen } = useToggle();
+  const {
+    isMobileSidebarOpen,
+    setIsMobileSidebarOpen,
+    isCreatePostOpen,
+    setIsCreatePostOpen,
+  } = useToggle();
+
+  const {auth}=useAuth();
+  const user=auth?.user;
+
+  const {likeNotification} =useData();
+
+  const navigate = useNavigate();
 
   // Check if mobile view based on screen width
   useEffect(() => {
@@ -38,15 +56,54 @@ const Sidebar = () => {
     setIsMobileSidebarOpen(!isMobileSidebarOpen);
   };
 
-  const handleLogout=()=>{}
+  const sidebarHandler = (textType) => {
+    if (textType === "Logout") {
+      logoutHandler();
+    } else if (textType === "Create") {
+      setIsCreatePostOpen(!isCreatePostOpen);
+    } else if (textType === "Profile") {
+      navigate(`/profile/${user?._id}`);
+    } else if (textType === "Home") {
+      navigate("/");
+    } else if (textType === "Messages") {
+      navigate("/chat");
+    }
+  };
+
+  const logoutHandler=async()=>{
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/user/logout",
+        {
+          method: "GET",
+          credentials: "include", // Ensures cookies are sent
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        dispatch(setAuthUser(null));
+        dispatch(setSelectedPost(null));
+        dispatch(setPosts([]));
+        navigate("/login");
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message || "Logout failed");
+    }
+  }
 
   const menuItems = [
-    { name: "Home", icon: Home },
-    { name: "Create", icon: PlusSquare },
-    { name: "Code Room", icon: FileCode },
-    { name: "Messages", icon: MessageCircle },
-    { name: "Profile", icon: User },
-    { name: "Search", icon: Search },
+    { name: "Home", icon: Home, },
+    { name: "Create", icon: PlusSquare, },
+    { name: "Code Room", icon: FileCode, },
+    { name: "Messages", icon: MessageCircle, },
+    { name: "Profile", icon: User, },
+    { name: "Search", icon: Search, },
   ];
 
   // Desktop sidebar
@@ -86,9 +143,54 @@ const Sidebar = () => {
               <motion.a
                 whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => sidebarHandler(item.name)}
                 className="flex items-center px-4 py-3 rounded-lg mx-2 cursor-pointer"
               >
                 <item.icon size={24} />
+                {item.name === "Notifications" &&
+                  likeNotification.length > 0 && (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          size="icon"
+                          className="rounded-full h-5 w-5 bg-red-600 hover:bg-red-600 absolute bottom-6 left-6"
+                        >
+                          {likeNotification.length}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <div>
+                          {likeNotification.length === 0 ? (
+                            <p>No new notification</p>
+                          ) : (
+                            likeNotification.map((notification) => {
+                              return (
+                                <div
+                                  key={notification.userId}
+                                  className="flex items-center gap-2 my-2"
+                                >
+                                  <Avatar>
+                                    <AvatarImage
+                                      src={
+                                        notification.userDetails?.profilePicture
+                                      }
+                                    />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                  </Avatar>
+                                  <p className="text-sm">
+                                    <span className="font-bold">
+                                      {notification.userDetails?.username}
+                                    </span>{" "}
+                                    liked your post
+                                  </p>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
                 {expanded && (
                   <motion.span
                     initial={{ opacity: 0, x: -10 }}

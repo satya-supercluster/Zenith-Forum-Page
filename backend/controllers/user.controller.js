@@ -90,6 +90,28 @@ export const login = async (req, res) => {
         console.log(error);
     }
 };
+export const checkAuth = (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Not authenticated" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    User.findById(decoded.userId).then((user) => {
+      if (!user) {
+        return res
+          .status(401)
+          .json({ success: false, message: "User not found" });
+      }
+      res.json({ success: true, user });
+    });
+  } catch (error) {
+    return res.status(401).json({ success: false, message: "Invalid token" });
+  }
+};
+
 export const logout = async (_, res) => {
     try {
         return res.cookie("token", "", { maxAge: 0 }).json({

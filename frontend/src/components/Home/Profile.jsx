@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
 import useGetUserProfile from "@/data/useGetUserProfile";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+import { Button } from "../Global/button";
+import { Badge } from "../Global/badge";
 import { AtSign, Heart, MessageCircle } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
+import { Dialog, DialogContent, DialogTrigger } from "../Global/dialog";
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../Global/button";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import CommentDialog from "./CommentDialog";
 import axios from "axios";
 import { toast } from "sonner";
 // import { setPosts, setSelectedPost } from "@/redux/postSlice";
-import { Badge } from "../ui/badge";
+import { Badge } from "../Global/badge";
 import { useData } from "../../contexts/DataContext";
 import { useAuth } from "../../contexts/AuthContext";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../Global/avatar";
 import { useAuth } from "../../contexts/AuthContext";
 
 const SuggestedUsers = () => {
