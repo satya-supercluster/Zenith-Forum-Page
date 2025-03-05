@@ -1,6 +1,6 @@
 const cron = require('cron');
 const https = require('https');
-const backendUrl = "https://zenith-forum-page.onrender.com/cron";
+const backendUrl = "https://zenith-forum-page.onrender.com/api/cron";
 const job = new cron.CronJob('*/5 * * * *', function () {
   https
     .get(backendUrl, (res) => {
