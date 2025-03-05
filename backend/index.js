@@ -34,8 +34,9 @@ app.get("/api/cron", (req, res) => {
   res.send("Backend is up and running");
 });
 
-const { job } = require("./cron");
+import { job } from "./cron.js";
 job.start();
+
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 app.get("*", (req, res) => {
