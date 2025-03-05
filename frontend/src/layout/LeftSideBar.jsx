@@ -247,7 +247,10 @@ const Sidebar = () => {
                     <motion.a
                       whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={()=>{sidebarHandler(item.name); toggleMobileMenu();}}
+                      onClick={() => {
+                        sidebarHandler(item.name);
+                        toggleMobileMenu();
+                      }}
                       className="flex items-center px-4 py-3 cursor-pointer"
                     >
                       <item.icon size={24} />
@@ -264,6 +267,7 @@ const Sidebar = () => {
               <motion.a
                 whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
                 whileTap={{ scale: 0.95 }}
+                onClick={logoutHandler}
                 className="flex items-center px-4 py-3 rounded-lg cursor-pointer"
               >
                 <LogOut size={24} />

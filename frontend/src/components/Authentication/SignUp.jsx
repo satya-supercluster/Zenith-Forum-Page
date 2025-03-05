@@ -81,7 +81,7 @@ const Signup = () => {
               htmlFor="username"
               className="block text-sm font-medium text-gray-200"
             >
-              Scholar Number
+              Username
             </label>
             <input
               id="username"
